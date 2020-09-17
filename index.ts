@@ -86,6 +86,13 @@ const render = (context: Context) => {
   });
 };
 
+const createREADME = () => {
+  return `### My repo
+
+Generated using [this link](${document.location.toString()})
+`
+}
+
 const registerGitDownloadClickHandler = (context: Context) => {
   document.getElementById("make-git-repo").onclick = async () => {
     const downloadButton = document.getElementById("make-git-repo") as HTMLButtonElement;
@@ -99,7 +106,7 @@ const registerGitDownloadClickHandler = (context: Context) => {
     const fs = new LightningFS("git-fs", { wipe: true });
     const pfs = fs.promises;
 
-    await pfs.writeFile("/README.md", "### Readme");
+    await pfs.writeFile("/README.md", createREADME());
 
     const gitDeets = { fs, gitdir: "/.git", dir: "/" };
     await git.init({ defaultBranch: "main", ...gitDeets });
