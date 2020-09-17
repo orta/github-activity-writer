@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "deploy": "parcel build index.html --out-dir prod"
   },
   "dependencies": {
     "@isomorphic-git/lightning-fs": "^4.3.0",
