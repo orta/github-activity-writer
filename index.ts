@@ -369,6 +369,15 @@ const registerEmailFaff = () => {
 };
 
 const start = () => {
+  const  UA = navigator.userAgent
+  const hasTouchScreen =
+    /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+    /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+
+  if (hasTouchScreen) {
+    alert("This website is not built for mobile devices, it needs a file-system to be useful, come back on a computer.")
+  }
+
   fillData(0);
 
   const canvas = document.getElementById("renderer") as HTMLCanvasElement;
