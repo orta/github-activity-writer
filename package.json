@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "parcel index.html",
-    "deploy": "rm -rf docs; parcel build index.html --out-dir docs"
+    "deploy": "rm -rf docs; parcel build index.html --out-dir docs; cp CNAME docs"
   },
   "dependencies": {
     "@isomorphic-git/lightning-fs": "^4.3.0",
