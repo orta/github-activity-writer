@@ -34,7 +34,7 @@
       </div>
 
       <button id="random">
-        <svg width="31" height="29" viewBox="0 0 31 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="31" height="29" viewBox="0 0 31 29" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.5;">
           <path
             d="M0.5 6.5L15.2396 0.794343C15.7271 0.605653 16.269 0.61529 16.7494 0.821189L30 6.5M0.5 6.5L15.2396 12.2057C15.7271 12.3943 16.269 12.3847 16.7494 12.1788L30 6.5M0.5 6.5V19.2459C0.5 20.0128 0.938538 20.7122 1.62888 21.0462L15.0827 27.5561C15.659 27.835 16.3339 27.8211 16.8983 27.5188L28.9444 21.0655C29.5944 20.7173 30 20.0398 30 19.3025V6.5"
             stroke="black"
@@ -56,6 +56,49 @@
         </svg>
       </button>
 
+      <div id="colors">
+        <button data-index="-1" class="selected" title="Set color to cycle (key: 1)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="12" height="12">
+              <rect width="12" height="12" fill="white" />
+            </mask>
+            <g mask="url(#mask0)">
+              <line x1="9.06066" y1="-6.93934" x2="-5.93934" y2="8.06066" stroke="#C4C4C4" stroke-width="3" />
+              <line x1="19.0607" y1="3.06066" x2="4.06066" y2="18.0607" stroke="#C4C4C4" stroke-width="3" />
+              <line x1="11.0607" y1="-4.93934" x2="-3.93934" y2="10.0607" stroke="#9CE9A8" stroke-width="3" />
+              <line x1="13.0607" y1="-2.93934" x2="-1.93934" y2="12.0607" stroke="#42C463" stroke-width="3" />
+              <line x1="15.0607" y1="-0.93934" x2="0.0606604" y2="14.0607" stroke="#31A14E" stroke-width="3" />
+              <line x1="17.0607" y1="1.06066" x2="2.06066" y2="16.0607" stroke="#226E39" stroke-width="3" />
+            </g>
+          </svg>
+        </button>
+        <button data-index="0" title="Set color to grey, e.g. no commits (key: 2)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="12" height="12" fill="#C4C4C4" />
+          </svg>
+        </button>
+        <button data-index="1" title="Set color to lightest green, e.g. little commits (key: 3)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="12" height="12" fill="#9CE9A8" />
+          </svg>
+        </button>
+        <button data-index="2" title="Set color to light green, e.g. some commits (key: 4)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="12" height="12" fill="#42C463" />
+          </svg>
+        </button>
+        <button data-index="3" title="Set color to green, e.g. a bunch commits (key: 5)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="12" height="12" fill="#31A14E" />
+          </svg>
+        </button>
+        <button data-index="4" title="Set color to dark green, e.g. a lot of commits (key: 6)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="12" height="12" fill="#226E39" />
+          </svg>
+        </button>
+      </div>
+
       <div id="email-note">
         <svg width="27" height="47" viewBox="0 0 27 47" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -75,7 +118,11 @@
         <h2>Next Steps</h2>
         <ol>
           <li>
-            <p>Create a new GitHub Repo: <a href="https://github.com/new" target="_blank">github.com/new</a><br/><img src="./img/new-repo.png"/></p>
+            <p>
+              Create a new GitHub Repo: <a href="https://github.com/new" target="_blank">github.com/new</a><br /><img
+                src="./img/new-repo.png"
+              />
+            </p>
           </li>
           <li><p>Copy the URL of your new repo</p></li>
           <li><p>Open the Terminal</p></li>
@@ -117,7 +164,10 @@
 
           <p>The instructions then teach you how to get that synced up with a repo on your GitHub account.</p>
 
-          <p>The repo is open source if you want to contribute: <a href="https://github.com/orta/github-activity-writer">github.com/orta/github-activity-writer</a></p>
+          <p>
+            The repo is open source if you want to contribute:
+            <a href="https://github.com/orta/github-activity-writer">github.com/orta/github-activity-writer</a>
+          </p>
         </section>
         <section>
           <h2>WHOAMI?</h2>

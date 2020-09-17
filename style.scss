@@ -98,7 +98,7 @@ article {
   > button {
     position: absolute;
     right: 0;
-    
+
     background: none;
     -webkit-appearance: none;
     border: 1px solid lightgrey;
@@ -119,6 +119,10 @@ article {
     &#erase {
       bottom: 30px;
     }
+    &#fill {
+      height: auto;
+      bottom: 58px;
+    }
   }
 
   canvas {
@@ -130,10 +134,37 @@ article {
     position: absolute;
     left: 100px;
     bottom: -56px;
+
     p {
       padding-left: 10px;
       padding-top: 10px;
       font-size: 16px;
+    }
+  }
+
+  #colors {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      border: 1px solid lightgrey;
+      border-top: 0 solid;
+
+      height: 20px;
+      width: 50px;
+      position: static;
+      background: none;
+      -webkit-appearance: none;
+
+      &:hover, &.selected {
+        background-color: #eee;
+      }
+      &:active {
+        background-color: #ddd;
+      }
     }
   }
 }

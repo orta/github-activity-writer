@@ -70,6 +70,7 @@ const colorForDepth = (depth: Depth) => {
 type Context = {
   canvas: HTMLCanvasElement;
   data: DataType;
+  color: Depth | -1;
 };
 
 const render = (context: Context) => {
@@ -106,27 +107,26 @@ const registerGitDownloadClickHandler = (context: Context) => {
     let offset = -1;
     let commitCount = 0;
 
+    const totalBoxes = counts.reduce((a, b) => a + b, 0);
+    let boxesLookedAt = 0;
+    const progress = document.getElementById("progress-bar");
+    progress.style.opacity = "1";
 
-    const totalBoxes = counts.reduce((a, b) => a + b, 0)
-    let boxesLookedAt = 0
-    const progress = document.getElementById("progress-bar")
-    progress.style.opacity = "1"
-    
-    const progressText = document.getElementById("progress-text")
-    progressText.textContent = "Creating commits"
+    const progressText = document.getElementById("progress-text");
+    progressText.textContent = "Creating commits";
 
     const updatePercent = () => {
-      const perc = Math.round((boxesLookedAt/totalBoxes) * 100) 
-      progress.style.width = `${perc}%`
-    }
+      const perc = Math.round((boxesLookedAt / totalBoxes) * 100);
+      progress.style.width = `${perc}%`;
+    };
 
     // right to left
     for (let colIndex = 50; colIndex >= 0; colIndex--) {
       // bottom to top, 7 -> 0
-      updatePercent()
+      updatePercent();
 
       for (let rowIndex = 6; rowIndex >= 0; rowIndex--) {
-        boxesLookedAt++
+        boxesLookedAt++;
 
         const value = context.data[rowIndex][colIndex];
 
@@ -139,8 +139,7 @@ const registerGitDownloadClickHandler = (context: Context) => {
 
           commitCount++;
 
-          const commit = () =>
-          {
+          const commit = () => {
             commitCount++;
 
             return git.commit({
@@ -148,7 +147,7 @@ const registerGitDownloadClickHandler = (context: Context) => {
               author: { email: email, name: email.split("@")[0], timestamp: Math.floor(timestamp.valueOf() / 1000) },
               ...gitDeets,
             });
-          }
+          };
 
           switch (value) {
             case 4:
@@ -204,7 +203,7 @@ const registerGitDownloadClickHandler = (context: Context) => {
       }
     };
 
-    progressText.textContent = "Zipping"
+    progressText.textContent = "Zipping";
     await lookAtFolder("/", root);
 
     const fileStream = streamSaver.createWriteStream("archive.zip");
@@ -234,8 +233,8 @@ const registerGitDownloadClickHandler = (context: Context) => {
     downloadButton.disabled = false;
     downloadButton.textContent = "Create new repo";
     context.canvas.style.opacity = "1";
-    progress.style.opacity = "0"
-    progressText.textContent = " "
+    progress.style.opacity = "0";
+    progressText.textContent = " ";
   };
 };
 
@@ -265,11 +264,10 @@ const registerRandomButtonFaff = (context: Context) => {
 const registerClearButtonFaff = (context: Context) => {
   document.getElementById("erase").onclick = async () => {
     fillData(0);
-    save(context)
+    save(context);
     render(context);
-  }
-}
-
+  };
+};
 
 const registerCanvasClickHandler = (context: Context) => {
   const { canvas, data } = context;
@@ -288,7 +286,7 @@ const registerCanvasClickHandler = (context: Context) => {
 
   document.onmousemove = (e) => {
     if (!leftMouseButtonOnlyDown) return;
-    
+
     const elemLeft =
       canvas.parentElement.offsetLeft + canvas.parentElement.clientLeft + canvas.offsetLeft + canvas.clientLeft;
     const elemTop =
@@ -319,9 +317,13 @@ const clickedOnItem = (context: Context, col: number, row: number) => {
   const { data } = context;
 
   const existingDepth = data[row][col];
-  let newDepth = (existingDepth + 1) as Depth;
-  if (newDepth > meta.maxDepth) newDepth = 0;
-  data[row][col] = newDepth;
+  if (context.color === -1) {
+    let newDepth = (existingDepth + 1) as Depth;
+    if (newDepth > meta.maxDepth) newDepth = 0;
+    data[row][col] = newDepth;
+  } else {
+    data[row][col] = context.color;
+  }
 
   save(context);
   render(context);
@@ -357,7 +359,7 @@ const load = (): DataType => {
 
 const registerEmailFaff = () => {
   const emailInput = document.getElementById("email") as HTMLInputElement;
-  emailInput.onkeyup = () => {
+  emailInput.onkeydown = () => {
     if (emailInput.value && emailInput.value.includes(".") && emailInput.value.includes("@")) {
       const gitButton = document.getElementById("make-git-repo") as HTMLButtonElement;
       gitButton.disabled = false;
@@ -368,14 +370,41 @@ const registerEmailFaff = () => {
   };
 };
 
+const registerColorKeyboardShortcuts = (context: Context) => {
+  const keys = ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6"];
+  document.onkeyup = (e) => {
+    if (keys.includes(e.code)) {
+      const index = keys.indexOf(e.code);
+      const toolbarButtons = document.querySelectorAll("#colors button");
+
+      toolbarButtons.forEach((e) => e.classList.remove("selected"));
+      const button = toolbarButtons[index];
+      button.classList.add("selected");
+      context.color = Number(button.getAttribute("data-index")) as Depth;
+    }
+  };
+};
+
+const registerColorTool = (context: Context) => {
+  const toolbarButtons = document.querySelectorAll("#colors button");
+  toolbarButtons.forEach((button: HTMLButtonElement) => {
+    button.onclick = () => {
+      toolbarButtons.forEach((e) => e.classList.remove("selected"));
+      button.classList.add("selected");
+      context.color = Number(button.getAttribute("data-index")) as Depth;
+    };
+  });
+};
+
 const start = () => {
-  const  UA = navigator.userAgent
+  const UA = navigator.userAgent;
   const hasTouchScreen =
-    /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-    /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+    /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) || /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
 
   if (hasTouchScreen) {
-    alert("This website is not built for mobile devices, it needs a file-system to be useful, come back on a computer.")
+    alert(
+      "This website is not built for mobile devices, it needs a file-system to be useful, come back on a computer."
+    );
   }
 
   fillData(0);
@@ -384,6 +413,7 @@ const start = () => {
   const context = {
     canvas,
     data: onscreenData,
+    color: -1 as Depth,
   };
 
   registerGitDownloadClickHandler(context);
@@ -391,6 +421,8 @@ const start = () => {
   registerEmailFaff();
   registerRandomButtonFaff(context);
   registerClearButtonFaff(context);
+  registerColorTool(context);
+  registerColorKeyboardShortcuts(context)
   load();
   render(context);
 };
