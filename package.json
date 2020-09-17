@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "parcel index.html",
-    "deploy": "parcel build index.html --out-dir prod"
+    "deploy": "parcel build index.html --out-dir docs --public-url /github-activity-writer/"
   },
   "dependencies": {
     "@isomorphic-git/lightning-fs": "^4.3.0",
