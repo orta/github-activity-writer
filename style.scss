@@ -1,7 +1,7 @@
 html {
   background: linear-gradient(180deg, #5e67c7 0%, #313778 80%);
   color: white;
-  font-family: Avenir Next;
+  font-family: Verdana, Geneva, sans-serif;
   font-style: normal;
 }
 
@@ -19,7 +19,7 @@ h1 {
   font-style: normal;
 
   font-weight: bold;
-  font-size: 60px;
+  font-size: 52px;
   text-align: center;
   margin-left: -80px;
   margin-right: -80px;
@@ -43,7 +43,7 @@ h2 {
 }
 
 p {
-  font-family: Avenir Next;
+  font-family: Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -69,6 +69,19 @@ article {
   padding: 20px;
   position: relative;
   margin-top: 50px;
+
+  > ul {
+    position: absolute;
+    top: 30px;
+    left: 00px;
+    color: #444;
+    font-size: 12px;
+    li {
+      margin-bottom: 13px;
+      list-style: none;
+      text-align: right;
+    }
+  }
 
   > div {
     margin: 20px auto;
